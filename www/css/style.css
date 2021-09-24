@@ -1,0 +1,37 @@
+.body {
+	background-color: white;
+}
+.thead {
+	/* text-align: center; */
+	color: white;
+	background-color: black;
+}
+
+.tbody {
+	/* text-align: center; */
+
+	height: 80px;
+	width: 100%;
+}
+.card::-webkit-scrollbar {
+	display: none;
+}
+.card {
+	margin-left: 12%;
+	margin-right: 12%;
+	height: 400px;
+	display: block;
+	overflow-y: auto;
+	border-color: black;
+	border-radius: 8px;
+}
+#mapid {
+	margin-left: 12%;
+	margin-right: 12%;
+	height: 400px;
+	width: auto;
+	border-radius: 8px;
+}
+.card-map {
+	height: auto;
+}
