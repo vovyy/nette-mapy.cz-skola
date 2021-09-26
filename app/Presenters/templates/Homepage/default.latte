@@ -1,7 +1,4 @@
-{* This is the welcome page, you can delete it *}
- 
 {block content}
-
 <br>
 <div class="card" >
 
@@ -22,28 +19,27 @@
 		
   		</thead>	
 		
- 	 	<tbody class='tbody'>
-			
-			 {dump $data}
-			{* {$geo_long = array()}  *}
-			{foreach $data as $row}
-			
 		
+ 	 	<tbody class='tbody'>
+		
+			{foreach $data as $row}
 			<tr>
 				<td>{$row->id}</td>
 				<td>{$row->obor}</td>
 				<td>{$row->prijatych}</td>
 				<td>{$row->mesto}</td>
-				<td>{$row->skola}</td>
+				<td>{$geo_school[] = $row->skola}</td>
 				<td>{$row->rok_prijeti}</td>
-				<td>{$row->geo_lattitude}</td>
-				<td>{$row->geo_longtitude}</td>
-]
-			</tr>
-		
+				<td>{$geo_lat[] = $row->geo_lattitude}</td>
+				<td>{$geo_long[] = $row->geo_longtitude}</td>
 
+			</tr>
 			 {/foreach}
-		
+			 {var $igeo_lat = implode(',', $geo_lat)}
+			 {var $igeo_long=implode(',', $geo_long)}
+	 		 {var $igeo_school = implode(',', $geo_school)}
+		<br>
+	
 		</tbody>
     </table> 
 	
@@ -53,17 +49,18 @@
 	
 	<br>
 	<br>
-	{* {$geo_la = implode(" ",$geo_lat)}
-	{$geo_lo = implode(" ",$geo_long)}
-
-	{dump $geo_lat} *}
+	
 	
 <div id="mapid">  
 	
 	<script n:syntax ='double'>
+	var latti = {{$igeo_lat|explode:","}};
+	var longti = {{$igeo_long|explode:","}};
+	var school = {{$igeo_school|explode:","}};	
+
+	console.log(school)
 	
-	
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+var mymap = L.map('mapid').setView([latti[0],longti[0]], 10);
 L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -72,28 +69,23 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: "pk.eyJ1Ijoidm92eW5hdG9yIiwiYSI6ImNrdHgxcG5oczJjajgydm5xYWp2Z201ZXIifQ.VxR83q6xMijNTFPYLWLkQA"
 }).addTo(mymap);
-	</script>
 	
-	<script >
 	
-var marker = L.marker([51.5, -0.09]);	
+for (let i = 0; i < longti.length; i++){
+var marker = L.marker([latti[i],longti[i]]).addTo(mymap);	
+marker.bindPopup("Toto je:"+' '+ school[i])
 var popup = L.popup();
-
+}
 function onMapClick(e) {
     popup
         .setLatLng(e.latlng)
         .setContent("You clicked the map at " + e.latlng.toString())
 		.openOn(mymap);
-    marker    
-		.setLatLng({})
-		.addTo(mymap)
-	
-	
-		
-
-}
 
 mymap.on('click', onMapClick);
+}
+
+
 
 
 	</script>

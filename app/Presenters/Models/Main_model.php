@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Nette;
+use Nette\Utils\Json;
 
 class Main_model
 {
@@ -17,12 +18,11 @@ class Main_model
 
     public function get_data()
     {
-        $result = $this->database->query('
+        $result = $this->database->fetchAll('
         SELECT mesto.id, mesto.nazev AS mesto, obor.nazev AS obor, pocet_prijatych.pocet AS prijatych, pocet_prijatych.rok AS rok_prijeti, skola.nazev AS skola, skola.geo_lat AS geo_lattitude, skola.geo_long AS geo_longtitude 
         FROM `mesto` 
         INNER JOIN skola ON mesto.id=skola.mesto INNER JOIN pocet_prijatych ON skola.id=pocet_prijatych.skola 
-        INNER JOIN obor ON pocet_prijatych.obor=obor.id
-');
+        INNER JOIN obor ON pocet_prijatych.obor=obor.id');
         return $result;
     }
 }

@@ -1,9 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Presenters;
 
+use Nette\Utils\Json;
 use Nette;
 use App\Model\Main_model;
 
