@@ -1,0 +1,27 @@
+{block content}
+<ul class="navig">
+	{if $user->isLoggedIn()}
+		<li><a class="nav-item" n:href="Sign:out">Odhlásit</a></li>
+		<li><a  class="nav-item" n:href="Post:post">Přidat</a></li>
+	{else}
+		<li><a class="nav-item" n:href="Sign:in">Přihlásit</a></li>
+	{/if}
+	
+
+	<li><a  class="nav-item" n:href="Homepage:">Domů</a></li>
+</ul>
+<div class="jumbotron px-3 py-4 px-sm-4 py-sm-5 rounded-3 mb-3">
+	
+<section class="mt-3">
+
+        <h1 class="display-1">Přidat školu</h1>
+        
+</section>
+</div>
+<div class="card post-card">
+{control postForm}
+</div>
+<script n:syntax ='double'>
+$(function() {
+    $( "#datepicker" ).datepicker({dateFormat: 'yy'});
+    });</script>
